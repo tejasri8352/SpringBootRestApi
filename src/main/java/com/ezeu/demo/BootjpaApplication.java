@@ -8,7 +8,7 @@ public class BootjpaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BootjpaApplication.class, args);
-		System.out.println("hi");
+		System.out.println("hi kiran.........");
 	}
 
 }

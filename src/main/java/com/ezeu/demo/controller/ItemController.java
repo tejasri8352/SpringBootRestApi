@@ -14,24 +14,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ezeu.demo.dao.ItemRepo;
-import com.ezeu.demo.mode.Item;
+import com.ezeu.demo.model.Item;
 
 @RestController
 public class ItemController 
 {
 	@Autowired
 	ItemRepo repo;
+	
 	@RequestMapping("/")
 	public String home()
 	{
-		return "home.jsp";
+		return "<h1>This is just localhost just give 'items' to get the list</h1>";
 	}
+	
 	@PostMapping("/item")
 	public Item addItem(@RequestBody Item item)
 	{
 		repo.save(item);
 		return item;
-	}
+	}   
+	
 	@DeleteMapping("/item/{id}")
 	public String deleteItem(@PathVariable int id)
 	{
@@ -47,17 +50,21 @@ public class ItemController
 		return repo.findAll();		
 		
 	}
+	
 	@PutMapping("/item")
 	public Item saveOrUpdateItem(@RequestBody Item item)
 	{
 		repo.save(item);
 		return item;
 	}
+	
 	@RequestMapping("/item/{id}")
-	public Optional<Item> getItem(@PathVariable("id")int id)
+	public Item getItem(@PathVariable("id") int id)
 	{
-		
-		return repo.findById(id);		
-		
+		Optional<Item> optionalItem = repo.findById(id);
+		if(optionalItem.isPresent()) {
+			return optionalItem.get();
+		} else 
+			return null;
 	}
 }
